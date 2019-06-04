@@ -26,24 +26,55 @@ let testData = [
     {name: 'Cow', parent: 'C'},
     {name: 'cow', parent: 'c'},
     {name: 'Car', parent: 'C'},
-    {name: 'car', parent: 'c'},
+    {name: 'car', parent: 'c'}
 ];
 
 const tree = treeMaker(testData, null);
 
-const treeSearcher = (tree, target) => {
+/*
+{
+  "Uppercase": {
+    "A": {
+      "Apple": {},
+      "Ant": {}
+    },
+    "B": {
+      "Big": {},
+      "Boring": {}
+    },
+    "C": {
+      "Cow": {},
+      "Car": {}
+    }
+  },
+  "Lowercase": {
+    "a": {
+      "apple": {},
+      "ant": {}
+    },
+    "b": {
+      "big": {},
+      "boring": {}
+    },
+    "c": {
+      "cow": {},
+      "car": {}
+    }
+  }
+}
+*/
+
+const treeSearcher = (tree, target) => {        
     for (let key in tree) {
         if (key === target) {
-            return key;
-        }
-        if (tree[key] === target) {
-            return tree[key];
-        }
-        if (Object.keys(tree[key]).length > 0) {
-            return treeSearcher(tree[key], target);
-        }
+            return key;            
+        } else {
+            let result;
+            result = treeSearcher(tree[key], target); 
+            if (result)
+                return result;
+        }        
     }
-    return 'NULL';
 }
 
-treeSearcher(tree, 'Apple');
+treeSearcher(tree, 'car');
